@@ -1,2 +1,19 @@
-#产生训练集样本
+##产生训练集样本
 让我们测试模型的性能，甚至看看在接近培训过程结束时，生成器的生成技能（设计事件的门票）如何得到增强：
+def view_generated_samples (epoch_num, g_samples):
+    fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True,
+                             sharex = True)
+    print(gen_samples[epoch_num][1].shape)
+    for ax, gen_image in zip(axes.flatten(), g_samples[0][epoch_num]):
+        ax.xaxis.set_visible(False)
+        ax.yaxis.set_visible(Flase)
+        img = ax.imshow(gen_image.reshape((28, 28)), cmap = 'Greys_r')
+    return fig, axes
+在绘制训练过程中最后一个时期的一些生成图像之前，我们需要在训练过程中加载包含每个时期生成的样本的持久文件：
+# load samples from generator taken while trainin(在训练时从生成器中产生样本)
+with open('train_generator_samples.pkl', 'rb') as f:
+    gen_samples = pkl.load(f)
+现在，让我们从训练过程的最后一个时期绘制16个生成的图像，看看生成器如何生成有意义的数字，如3,7和2：
+_ = view_generated_samples(-1, gen_samples)
+
+如上图所示，您可以看到由鉴频器线和生成器线表示的模型损耗正在收敛。
