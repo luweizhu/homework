@@ -24,3 +24,7 @@ for gen_sample, ax_row in zip(gen_samples[::int(len(gen_sample)/cols)], ax_row):
     ax.imshow(image.reshape((28, 28)), camp='Greys_r')
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
+正如您所看到的，发生器的设计技能及其生成假图像的能力起初非常有限，然后在培训过程结束时得到了增强。
+##从生成器中获取样本
+在上一节中，我们介绍了在此GAN架构的培训过程中生成的一些示例。 
+我们还可以通过加载我们保存的检查点，并为生成器提供可用于生成新图像的新潜在空间，从生成器中生成全新的图像：
