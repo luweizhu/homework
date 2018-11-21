@@ -9,14 +9,13 @@
         ax.xaxis.set_visible(False)  
         ax.yaxis.set_visible(Flase)  
         img = ax.imshow(gen_image.reshape((28, 28)), cmap = 'Greys_r')  
-    return fig, axes`
+    return fig, axes`  
     
 在绘制训练过程中最后一个时期的一些生成图像之前，我们需要在训练过程中加载包含每个时期生成的样本的持久文件：
 
-`#load samples from generator taken while trainin(在训练时从生成器中产生样本)
-
-with open('train_generator_samples.pkl', 'rb') as f:
-    gen_samples = pkl.load(f)`
+`#load samples from generator taken while trainin(在训练时从生成器中产生样本)  
+with open('train_generator_samples.pkl', 'rb') as f:  
+gen_samples = pkl.load(f)`  
     
 现在，让我们从训练过程的最后一个时期绘制16个生成的图像，看看生成器如何生成有意义的数字，如3,7和2：
 
