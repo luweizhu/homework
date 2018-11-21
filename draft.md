@@ -3,7 +3,6 @@
 让我们测试模型的性能，看看在接近培训过程结束时，生成器的生成技能（设计事件的门票）是如何得到增强的：
 
 `def view_generated_samples (epoch_num, g_samples):  
-
     fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True,sharex = True)  
     print(gen_samples[epoch_num][1].shape)  
     for ax, gen_image in zip(axes.flatten(), g_samples[0][epoch_num]):  
@@ -15,6 +14,7 @@
 在绘制训练过程中最后一个时期的一些生成图像之前，我们需要在训练过程中加载包含每个时期生成的样本的持久文件：
 
 `#load samples from generator taken while trainin(在训练时从生成器中产生样本)
+
 with open('train_generator_samples.pkl', 'rb') as f:
     gen_samples = pkl.load(f)`
     
