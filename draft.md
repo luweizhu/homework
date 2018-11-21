@@ -4,21 +4,22 @@
 
 ```
 def view_generated_samples (epoch_num, g_samples):
-fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True,sharex = True)  
-print(gen_samples[epoch_num][1].shape)  
-for ax, gen_image in zip(axes.flatten(), g_samples[0][epoch_num]):  
-ax.xaxis.set_visible(False)  
-ax.yaxis.set_visible(Flase)  
-img = ax.imshow(gen_image.reshape((28, 28)), cmap = 'Greys_r')  
-return fig, axes  
+    fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True,
+                             sharex = True)
+    print(gen_samples[epoch_num][1].shape)
+    for ax, gen_image in zip(axes.flatten(), g_samples[0][epoch_num]):
+        ax.xaxis.set_visible(False)
+        ax.yaxis.set_visible(Flase)
+        img = ax.imshow(gen_image.reshape((28, 28)), cmap = 'Greys_r')
+    return fig, axes
 ```
 
 在绘制训练过程中最后一个时期的一些生成图像之前，我们需要在训练过程中加载包含每个时期生成的样本的持久文件：
 
 ```
-#load samples from generator taken while trainin(在训练时从生成器中产生样本)  
-with open('train_generator_samples.pkl', 'rb') as f:  
-gen_samples = pkl.load(f)
+# load samples from generator taken while trainin(在训练时从生成器中产生样本)
+with open('train_generator_samples.pkl', 'rb') as f:
+    gen_samples = pkl.load(f)
 ```
     
 现在，让我们从训练过程的最后一个时期绘制16个生成的图像，看看生成器如何生成有意义的数字，如3,7和2：
@@ -31,8 +32,7 @@ _ = view_generated_samples(-1, gen_samples)
 
 ```
 rows, cols = 10, 6
-fig, axes = plt.subplots(figsize=(7,12), nrows=rows, ncols=cols,
-                         sharex = True, sharey=True)
+fig, axes = plt.subplots(figsize=(7,12), nrows=rows, ncols=cols, sharex = True, sharey=True)
 ```
 
 ```
@@ -47,7 +47,19 @@ for gen_sample, ax_row in zip(gen_samples[::int(len(gen_sample)/cols)], ax_row):
 # 从生成器中获取样本
 
 在上一节中，我们介绍了在此GAN架构的培训过程中生成的一些示例。 我们还可以通过加载我们保存的检查点，并为生成器提供可用于生成新图像的新潜在空间，从生成器中生成全新的图像：
+```
+# Sampling from the generator
+saver = tf.train.Saver(var_list=g_vars)
 
+with tf.Session() as sess:
+    #restoring the saved checkpoints
+    saver.restore(sess, tf.train.latest_checkpoint('checkpoints'))
+    gen_sample_z = np.random.uniform(-1, 1, size=(16, z_size))
+    generated_samples = sess.run(
+            generator(generator_inout_z, input_img_size, reuse_vars=True),
+            feed_dict={generator_input_z:gen_sample_z})
+    view_generated_samples(0, [generated_samples])
+```
 在实现此示例时，您可以提出一些观察结果。在训练过程的第一个时期，生成器没有任何技能来产生与真实相似的图像，因为它不知道它们的样子。甚至鉴别器也不知道如何区分由发生器产生的假图像和。 在训练开始时，会出现两种有趣的情况。首先，生成器不知道如何创建像我们最初馈送到网络的真实图像。 其次，鉴别器不知道真实图像和假图像之间的区别。
 
 在那之后，生成器开始伪造在某种程度上有意义的图像，这是因为生成器将学习来自原始输入图像的数据分布。 同时，鉴别器将能够区分假图像和真实图像，并且在训练过程结束时将被欺骗。
