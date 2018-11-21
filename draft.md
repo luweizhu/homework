@@ -4,8 +4,7 @@
 
 ```
 def view_generated_samples (epoch_num, g_samples):
-    fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True,
-                             sharex = True)
+    fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True, sharex = True)
     print(gen_samples[epoch_num][1].shape)
     for ax, gen_image in zip(axes.flatten(), g_samples[0][epoch_num]):
         ax.xaxis.set_visible(False)
