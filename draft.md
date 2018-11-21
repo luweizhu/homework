@@ -10,7 +10,7 @@
         ax.xaxis.set_visible(False)  
         ax.yaxis.set_visible(Flase)  
         img = ax.imshow(gen_image.reshape((28, 28)), cmap = 'Greys_r')  
-    return fig, axes```
+    return fig, axes`
     
 在绘制训练过程中最后一个时期的一些生成图像之前，我们需要在训练过程中加载包含每个时期生成的样本的持久文件：
 
