@@ -1,4 +1,6 @@
 #产生训练集样本
+
+
 让我们测试模型的性能，看看在接近培训过程结束时，生成器的生成技能（设计事件的门票）是如何得到增强的：
 def view_generated_samples (epoch_num, g_samples):
     fig, axes = plt.subplots(figsize=(7, 7), nrows=4, ncols=4, sharet = True,
